@@ -60,13 +60,13 @@ SELECT * FROM orders;
         ON O.Book_ID = B.Book_ID
         GROUP BY B.Genre;
         
--- 2) Find the average price of books in the "Fantasy" genre:
+-- 13) Find the average price of books in the "Fantasy" genre:
 		SELECT Genre, ROUND(AVG(Price),2) AS AVG_PRICE
         FROM books
         WHERE Genre = 'Fantasy'
         GROUP BY Genre;
 
--- 3) List customers who have placed at least 2 orders:
+-- 14) List customers who have placed at least 2 orders:
 		SELECT O.Customer_ID, C.name, 
         COUNT(O.order_id) AS NO_OF_ORDERS 
         FROM orders AS O
@@ -75,7 +75,7 @@ SELECT * FROM orders;
         GROUP BY O.Customer_ID, C.name
         HAVING NO_OF_ORDERS >= 2;
 
--- 4) Find the most frequently ordered book:
+-- 15) Find the most frequently ordered book:
 		SELECT O.BooK_ID, B.Title, B.Author, B.Genre, 
         COUNT(O.Order_ID) AS NO_OF_BOOKS
         FROM orders AS O
@@ -85,13 +85,13 @@ SELECT * FROM orders;
         ORDER BY NO_OF_BOOKS DESC
         LIMIT 1;
         
--- 5) Show the top 3 most expensive books of 'Fantasy' Genre :
+-- 16) Show the top 3 most expensive books of 'Fantasy' Genre :
 		SELECT * FROM books
         WHERE Genre = 'Fantasy'
         ORDER BY Price DESC 
         LIMIT 3;
 
--- 6) Retrieve the total quantity of books sold by each author:
+-- 17) Retrieve the total quantity of books sold by each author:
 		SELECT B.Author, 
         SUM(O.Quantity) AS Total_Quantity
         FROM Books AS B 
@@ -100,7 +100,7 @@ SELECT * FROM orders;
         GROUP BY B.Author
         ORDER BY Total_Quantity DESC;
 
--- 7) List the cities where customers who spent over $30 are located:
+-- 18) List the cities where customers who spent over $30 are located:
 		SELECT DISTINCT C.CITY, ROUND(O.Total_Amount,0) AS Total_Amount
         FROM Customers AS C 
         INNER JOIN Orders AS O
@@ -108,7 +108,7 @@ SELECT * FROM orders;
         WHERE Total_Amount > 30 
         ORDER BY Total_Amount DESC;
         
--- 8) Find the customer who spent the most on orders:
+-- 19) Find the customer who spent the most on orders:
 		SELECT C.Customer_ID, C.Name, 
         ROUND(SUM(O.Total_Amount),0) AS Total_Spent
         FROM Orders AS O
@@ -118,7 +118,7 @@ SELECT * FROM orders;
         ORDER BY Total_Spent DESC 
         LIMIT 1;
         
--- 9) Calculate the stock remaining after fulfilling all orders:
+-- 20) Calculate the stock remaining after fulfilling all orders:
 		SELECT B.Book_ID, B.Title, B.Stock, 
 		COALESCE(SUM(O.QUANTITY),0) AS Order_Quantity,
 		B.Stock - COALESCE(SUM(O.QUANTITY),0) AS Remaining_Quantity 
